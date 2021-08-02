@@ -3,11 +3,11 @@ from tensorflow.keras.layers import Concatenate
 from tensorflow.keras.layers import Input, Activation
 from tensorflow.keras.layers import Dense
 
-from ...utils.model_utils.abstract_models import _AbstractHyperEstimator
+from ...utils.model_utils.supervised import _AbstractHyperEstimator
 from ...utils.model_utils.metrics_losses import smape_k
 
 
-class MelchiorModel(_AbstractHyperEstimator):
+class RNN(_AbstractHyperEstimator):
     """
     """
     def __init__(self, n_features, prob=False, model_tag=None,
@@ -23,7 +23,7 @@ class MelchiorModel(_AbstractHyperEstimator):
         """
         self.n_features = n_features
         if model_tag is None:
-            self.model_tag = 'melchior'
+            self.model_tag = 'rnn'
         else:
             self.model_tag = model_tag
         self.prob = prob

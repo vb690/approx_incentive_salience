@@ -32,7 +32,7 @@ TR_BTCH = [btch for btch in TR_BTCH if btch not in VL_BTCH]
 ###############################################################################
 
 encoders = {
-    'melchior': '0_lstm_layer_features'
+    'rnn': '0_lstm_layer_features'
 }
 encoder_objs = {}
 

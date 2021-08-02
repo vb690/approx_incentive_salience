@@ -25,7 +25,7 @@ TARGETS_RMP = {
     'tar_sessions': 'Future N° Sessions'
 }
 
-with (open('results\\saved_data_containers\\melchior.pkl', 'rb')) as container:
+with (open('results\\saved_data_containers\\rnn.pkl', 'rb')) as container:
     DATA_CONTAINER = pickle.load(container)
 
 
@@ -34,7 +34,7 @@ relationships = create_relationships(
     t_steps=4
 )
 embeddings = [
-    np.load(f'results\\saved_emb\\melchior_eng_emb_{t}.npy') for t in range(5)
+    np.load(f'results\\saved_emb\\rnn_emb_{t}.npy') for t in range(5)
 ]
 embeddings = [
     embedding[~np.isnan(embedding).any(axis=1)] for embedding in embeddings
@@ -95,6 +95,6 @@ for target in TARGETS:
     colors = np.hstack(colors)
     df[TARGETS_RMP[target]] = colors
 
-df.to_csv('results\\saved_dim_reduction\\melchior_eng_emb_temporal.csv')
+df.to_csv('results\\saved_dim_reduction\\rnn_emb_temporal.csv')
 
 ###############################################################################

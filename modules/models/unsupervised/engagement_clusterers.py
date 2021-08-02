@@ -1,6 +1,6 @@
 from sklearn.cluster import KMeans, MiniBatchKMeans
 
-from ...utils.model_utils.clusterers import auto_elbow
+from ...utils.model_utils.unsupervised import auto_elbow
 
 
 def auto_kmeans(X, min_k, max_k, verbose=0, fast=True, save_name='',

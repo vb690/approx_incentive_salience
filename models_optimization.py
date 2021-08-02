@@ -6,7 +6,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from kerastuner.tuners import Hyperband
 
-from modules.models.supervised.engagement_estimators import MelchiorModel
+from modules.models.supervised.salience_estimators import RNN
 from modules.models.supervised.baselines import TimeDistributedENet
 from modules.models.supervised.baselines import TimeDistributedMLP
 from modules.utils.data_utils.data_handlers import DataGenerator
@@ -52,7 +52,7 @@ MODELS = {
         n_features=4,
         adjust_for_env=False
     ),
-    'melchior': MelchiorModel(
+    'rnn': RNN(
         n_features=4,
         adjust_for_env=False
     )

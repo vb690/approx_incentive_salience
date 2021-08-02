@@ -45,7 +45,7 @@ INPUTS_METRIC = [
 ]
 
 MODEL = load_full_model(
-    name='melchior',
+    name='rnn',
     optimizer=Adam(),
     custom_objects={'smape_k': smape_k},
     loss={
@@ -240,5 +240,5 @@ DATA_CONTAINER['error'] = errors_temporal
 DATA_CONTAINER['context'] = contexts_temporal
 DATA_CONTAINER['user_id'] = users_temporal
 
-with open('results\\saved_data_containers\\melchior.pkl', 'wb') as container:
+with open('results\\saved_data_containers\\rnn.pkl', 'wb') as container:
     pickle.dump(DATA_CONTAINER, container, pickle.HIGHEST_PROTOCOL)
