@@ -1,0 +1,14 @@
+tqdm
+numpy
+scipy
+pandas
+tensorflow
+sklearn
+skimage
+pymc3
+statsmodels
+minepy
+pygam
+umap-learn
+matplotlib
+seaborn
