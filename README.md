@@ -3,7 +3,15 @@
 
 ## Motivation
 
+## Data
+
 ## Features
+
+### Model for Saliency Estimation and Prediction of Future Interactions Intensity
+
+### Hyper-parameters Tuning
+
+### Embedding Extraction
 
 ## How to Use
 
