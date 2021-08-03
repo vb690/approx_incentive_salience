@@ -65,9 +65,7 @@ class LMMPerformance:
                     'Hyper Sigma Folds': {'beta': 0.5},
 
                     'Mu Slope': {'mu': 0, 'sigma': 0.1},
-                    'Sigma': {'beta': 0.5},
-
-                    'Nu': {'alpha': 2, 'beta': 0.1}
+                    'Sigma': {'beta': 25}
                     }
                 ):
         """
@@ -155,7 +153,7 @@ class LMMPerformance:
             )
 
             intercept = pm.Deterministic(
-                'Intercept = Time + Context',
+                'Intercept = Time + Context + Fold N',
                 varying_intercept_context[contexts_idx]
                 + varying_intercept_time[times_idx]
                 + varying_intercept_fold[folds_idx]
@@ -182,11 +180,7 @@ class LMMPerformance:
             )
 
             if self.robust:
-                nu = pm.Gamma(
-                    'Nu',
-                    alpha=priors['Nu']['alpha'],
-                    beta=priors['Nu']['beta'],
-                )
+                nu = pm.Gamma('Nu', alpha=2, beta=0.1)
                 out = pm.StudentT(
                     name=f'Observed SMAPE',
                     mu=mu,
@@ -259,7 +253,7 @@ class LMMPerformance:
 
         return None
 
-    def analyze(self, targets, figsize=(5, 5), **kwargs):
+    def analyze(self, targets, figsize=(5, 5), approx=False, **kwargs):
         """
         """
         for target in targets:
@@ -270,9 +264,13 @@ class LMMPerformance:
 
             with self.model:
 
-                traces = pm.sample(
-                    **kwargs
-                )
+                if approx:
+                    mean_field = pm.fit(**kwargs)
+                    traces = mean_field.sample(1000)
+                else:
+                    traces = pm.sample(
+                        **kwargs
+                    )
                 setattr(self, target.replace(' ', '_'), traces)
 
                 print(target)
