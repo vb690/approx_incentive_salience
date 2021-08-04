@@ -5,6 +5,16 @@
 
 ## Data
 
+| user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
+|:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
+|   XXX   |       1       |    10   |          30         |      35      |    14    |         6        |   lis   |
+|   XXX   |       2       |    20   |          5          |      15      |     1    |         6        |   lis   |
+|   XXX   |       3       |    10   |          6          |      12      |     3    |         6        |   lis   |
+|   YYY   |       1       |    40   |          4          |       7      |    43    |         2        |   hms   |
+|   YYY   |       2       |    50   |          35         |      38      |    12    |         2        |   hms   |
+|   ZZZ   |       1       |    12   |          21         |      21      |     3    |         2        |   jc3   |
+|   ZZZ   |       2       |    13   |          8          |       9      |    26    |         2        |   jc3   |
+
 ## Features
 
 ### Model for Saliency Estimation and Prediction of Future Interactions Intensity
