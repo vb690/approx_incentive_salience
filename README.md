@@ -5,6 +5,10 @@
 
 ## Data
 
+Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work.  
+
+However, we will provide here insights on the nature of the data employed in our work.
+
 | user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   XXX   |       1       |    10   |          30         |      35      |    14    |         6        |   lis   |
