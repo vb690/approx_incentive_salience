@@ -40,11 +40,11 @@ However, we will provide here insights on the nature of the data employed in our
 
 ### Notebooks
 1. [Exploratory Data Analysis](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/EDA_analysis.html)
-1. Models Performance Analysis
+1. [Models Performance Analysis](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/model_performance_analysis.html)
 2. Embeddings
     * [UMAP Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/embedding_analysis.html)
     * [Activations Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/activation_analysis.html) 
-    * Temporal UMAP Analyses
+    * [Temporal UMAP Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/umap_traces_visualization.html)
 3. [Paritionaing and Behavioural Profiles Extraction](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/cluster_analysis.html)
 
 ## Results
