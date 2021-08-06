@@ -15,7 +15,8 @@ class LMMPerformance:
     a Linear Mixed Effect Model
     """
     def __init__(self, df, models_column, contexts_column, time_column,
-                 fold_column, targets_column, outcomes_column, robust=False):
+                 fold_column, outcomes_column, targets_column=None,
+                 robust=False):
         """
         """
         self.df = df
@@ -30,7 +31,10 @@ class LMMPerformance:
     def __define_data(self, target):
         """
         """
-        data = self.df[self.df[self.targets_column] == target]
+        if self.targets_column is not None:
+            data = self.df[self.df[self.targets_column] == target]
+        else:
+            data = self.df
 
         unique_contexts = data[self.contexts_column].unique()
         unique_models = data[self.models_column].unique()
@@ -56,13 +60,13 @@ class LMMPerformance:
 
     def __build(self, target, priors={
                     'Hyper Mu Context': {'mu': 0, 'sigma': 0.1},
-                    'Hyper Sigma Context': {'beta': 0.5},
+                    'Hyper Sigma Context': {'beta': 25},
 
                     'Hyper Mu Time': {'mu': 0, 'sigma': 0.1},
-                    'Hyper Sigma Time': {'beta': 0.5},
+                    'Hyper Sigma Time': {'beta': 25},
 
                     'Hyper Mu Folds': {'mu': 0, 'sigma': 0.1},
-                    'Hyper Sigma Folds': {'beta': 0.5},
+                    'Hyper Sigma Folds': {'beta': 25},
 
                     'Mu Slope': {'mu': 0, 'sigma': 0.1},
                     'Sigma': {'beta': 25}
@@ -100,6 +104,10 @@ class LMMPerformance:
                 'models_idx',
                 models,
                 dims='Outcomes'
+            )
+            grand_mean = pm.Data(
+                'Grand Mean',
+                np.mean(outcomes)
             )
 
             # hyper priors
@@ -153,8 +161,9 @@ class LMMPerformance:
             )
 
             intercept = pm.Deterministic(
-                'Intercept = Time + Context + Fold N',
-                varying_intercept_context[contexts_idx]
+                'Intercept = Grand Mean + Time + Context + Fold N',
+                grand_mean
+                + varying_intercept_context[contexts_idx]
                 + varying_intercept_time[times_idx]
                 + varying_intercept_fold[folds_idx]
             )
@@ -205,9 +214,12 @@ class LMMPerformance:
     def comparison(self, target):
         """
         """
-        data = self.df[
-            self.df[self.targets_column] == target.replace('_', ' ')
-        ]
+        if self.targets_column is not None:
+            data = self.df[
+                self.df[self.targets_column] == target.replace('_', ' ')
+            ]
+        else:
+            data = self.df
 
         unique_models = data[self.models_column].unique()
         code_to_model = {
