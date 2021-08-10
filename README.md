@@ -23,6 +23,12 @@ However, we will provide here insights on the nature of the data employed in our
 
 ### Model for Saliency Estimation and Prediction of Future Interactions Intensity
 
+### Architecture
+
+<p align="center">
+  <img width="800" height="400" src="https://github.com/vb690/approx_incentive_salience/blob/main/readme_pic/rnn_architecture.png">
+</p>
+
 ### Hyper-parameters Tuning
 
 ### Embedding Extraction
