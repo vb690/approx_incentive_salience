@@ -55,7 +55,7 @@ We will now provide an illustrative example on the data format expected by this 
 
 ## Results
 
-### Perfromance Analysis
+### Performance Analysis
 
 ### Representation Analysis
 
