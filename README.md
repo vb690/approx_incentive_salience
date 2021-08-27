@@ -7,7 +7,7 @@
 
 Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work.  
 
-However, we will provide here insights on the nature of the data employed in our work.
+We will now provide an illustrative example on the data format expected by this project.
 
 | user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
