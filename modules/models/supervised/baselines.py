@@ -223,7 +223,7 @@ class MedianModel(_AbstractHyperEstimator):
 class TimeDistributedENet(_AbstractHyperEstimator):
     """
     """
-    def __init__(self, n_features, model_tag=None, adjust_for_env=False):
+    def __init__(self, n_features, model_tag=None):
         """
         """
         self.n_features = n_features
@@ -232,7 +232,6 @@ class TimeDistributedENet(_AbstractHyperEstimator):
         else:
             self.model_tag = model_tag
         self.prob = False
-        self.adjust_for_env = adjust_for_env
 
     def build(self, hp):
         """
@@ -260,74 +259,9 @@ class TimeDistributedENet(_AbstractHyperEstimator):
             name='embedding_layer_{}'.format('context')
         )(cont_input)
 
-        if self.adjust_for_env:
-            area_input = Input(
-                shape=(None,),
-                name='area_input'
-            )
-            hour_input = Input(
-                shape=(None, ),
-                name='hours_input'
-            )
-            day_week_input = Input(
-                shape=(None, ),
-                name='days_week_input'
-            )
-            day_year_input = Input(
-                shape=(None, ),
-                name='days_year_input'
-            )
-
-            model_input_tensors.extend(
-                [
-                    area_input,
-                    hour_input,
-                    day_week_input,
-                    day_year_input
-                ]
-            )
-
-            area_embedding = Embedding(
-                input_dim=900,
-                output_dim=1,
-                input_length=None,
-                name='embedding_layer_{}'.format('area')
-            )(area_input)
-            hour_embedding = Embedding(
-                input_dim=25,
-                output_dim=1,
-                input_length=None,
-                name='embedding_layer_{}'.format('hour')
-            )(hour_input)
-            day_week_embedding = Embedding(
-                input_dim=9,
-                output_dim=1,
-                input_length=None,
-                name='embedding_layer_{}'.format('day_week')
-            )(day_week_input)
-            day_year_embedding = Embedding(
-                input_dim=368,
-                output_dim=1,
-                input_length=None,
-                name='embedding_layer_{}'.format('day_year')
-            )(day_year_input)
-
-            features = Concatenate(
-                name='features_concatenation'
-            )(
-                [
-                 feat_input,
-                 area_embedding,
-                 cont_embedding,
-                 hour_embedding,
-                 day_week_embedding,
-                 day_year_embedding
-                 ]
-            )
-        else:
-            features = Concatenate(
-                name='features_concatenation'
-            )([feat_input, cont_embedding])
+        features = Concatenate(
+            name='features_concatenation'
+        )([feat_input, cont_embedding])
 
         # ABSENCE
         absence = TimeDistributed(
@@ -462,8 +396,7 @@ class TimeDistributedENet(_AbstractHyperEstimator):
 class TimeDistributedMLP(_AbstractHyperEstimator):
     """
     """
-    def __init__(self, n_features, prob=False, model_tag=None,
-                 adjust_for_env=False):
+    def __init__(self, n_features, prob=False, model_tag=None):
         """
         """
         self.n_features = n_features
@@ -472,7 +405,6 @@ class TimeDistributedMLP(_AbstractHyperEstimator):
         else:
             self.model_tag = model_tag
         self.prob = prob
-        self.adjust_for_env = adjust_for_env
 
     def build(self, hp):
         """
@@ -507,73 +439,10 @@ class TimeDistributedMLP(_AbstractHyperEstimator):
         )
 
         model_input_tensors = [feat_input, cont_input]
-        if self.adjust_for_env:
-            area_input = Input(
-                shape=(None,),
-                name='area_input'
-            )
-            hour_input = Input(
-                shape=(None, ),
-                name='hours_input'
-            )
-            day_week_input = Input(
-                shape=(None, ),
-                name='days_week_input'
-            )
-            day_year_input = Input(
-                shape=(None, ),
-                name='days_year_input'
-            )
 
-            model_input_tensors.extend(
-                [
-                    area_input,
-                    hour_input,
-                    day_week_input,
-                    day_year_input
-                ]
-            )
-            area_embedding = self._generate_embedding_block(
-                hp=hp,
-                input_tensor=area_input,
-                input_dim=900,
-                tag='area'
-            )
-            hour_embedding = self._generate_embedding_block(
-                hp=hp,
-                input_tensor=hour_input,
-                input_dim=25,
-                tag='hours'
-            )
-            day_week_embedding = self._generate_embedding_block(
-                hp=hp,
-                input_tensor=day_week_input,
-                input_dim=8,
-                tag='days_week'
-            )
-            day_year_embedding = self._generate_embedding_block(
-                hp=hp,
-                input_tensor=day_year_input,
-                input_dim=367,
-                tag='days_year'
-            )
-
-            features = Concatenate(
-                name='features_concatenation'
-            )(
-                [
-                 feat_input,
-                 area_embedding,
-                 cont_embedding,
-                 hour_embedding,
-                 day_week_embedding,
-                 day_year_embedding
-                 ]
-            )
-        else:
-            features = Concatenate(
-                name='features_concatenation'
-            )([feat_input, cont_embedding])
+        features = Concatenate(
+            name='features_concatenation'
+        )([feat_input, cont_embedding])
 
         # DENSE BLOCK
         dense = self._generate_fully_connected_block(

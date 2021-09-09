@@ -86,7 +86,7 @@ def reduce_dimensions(reducer, path, name, snapshots, context_aware=False,
     """
     componets = kwargs['n_components']
     reducer_name = reducer['name']
-    save_path = F'results\\saved_dim_reduction\\{componets}D\\'
+    save_path = f'results\\saved_dim_reduction\\{componets}D\\'
     for snapshot in snapshots:
 
         embedding = np.load(

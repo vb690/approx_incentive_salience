@@ -17,12 +17,14 @@ from modules.utils.general_utils.utilities import generate_exp_decay_weights
 INPUTS_PATH = 'data\\train\\inputs\\{}'
 TARGETS_PATH = 'data\\train\\targets\\{}'
 
+DS_FACTOR = 5  # how much downsapling we apply for visualization purposes
+
 BTCH = [
     i for i in range(
         len(os.listdir(INPUTS_PATH.format('continuous_features')))
     )
 ]
-BTCH = BTCH[0::5]
+BTCH = BTCH[0::DS_FACTOR]
 
 SNAPSHOTS = 10
 
@@ -71,6 +73,7 @@ with open('results\\saved_objects\\scalers\\global.pkl', 'rb') as pickle_file:
 DATA_CONTAINER = {}
 
 ###############################################################################
+
 inputs_temporal = {
     input_metric: {
         snapshot: [] for snapshot in range(SNAPSHOTS)

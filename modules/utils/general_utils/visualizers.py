@@ -140,7 +140,7 @@ def visualize_full_panel(reduction, contexts, context_remap,
 
     plt.savefig(
         f'{save_path}\\{save_name}.png',
-        dpi=500,
+        dpi=300,
         bbox_inches='tight'
     )
     if visual_verbose:
@@ -248,7 +248,7 @@ def visualize_temporal_panel(
 
     plt.savefig(
         f'{save_path}\\{color_name}.png',
-        dpi=500,
+        dpi=300,
         bbox_inches='tight'
     )
     if visual_verbose:
@@ -323,7 +323,7 @@ def visualize_neurons_function(data, metric, snapshot, metric_rmp,
 
         plt.savefig(
             f'results\\figures\\embeddings\\neurons_functions\\{metric}_{neuron}_{snapshot}.png',
-            dpi=500,
+            dpi=300,
             bbox_inches='tight'
         )
         plt.close('all')

@@ -10,6 +10,7 @@ from modules.utils.general_utils.utilities import group_wise_binning
 
 ###############################################################################
 
+# define the targets we are interested in and remappers for better naming
 TARGETS = [
     'tar_sessions',
     'tar_delta_sessions',
@@ -25,16 +26,21 @@ TARGETS_RMP = {
     'tar_sessions': 'Future N° Sessions'
 }
 
+T_STEPS = 5
+
+# we get the data container
 with (open('results\\saved_data_containers\\rnn.pkl', 'rb')) as container:
     DATA_CONTAINER = pickle.load(container)
 
-
+# this ensure we allign the embedding of each user across time
 relationships = create_relationships(
     users=DATA_CONTAINER['user_id'],
-    t_steps=4
+    t_steps=T_STEPS - 1
 )
+
+# load the embeddings and drop the nans
 embeddings = [
-    np.load(f'results\\saved_emb\\rnn_emb_{t}.npy') for t in range(5)
+    np.load(f'results\\saved_emb\\rnn_emb_{t}.npy') for t in range(T_STEPS)
 ]
 embeddings = [
     embedding[~np.isnan(embedding).any(axis=1)] for embedding in embeddings
@@ -63,21 +69,22 @@ print('Finished AlignedUMAP transformation')
 
 ###############################################################################
 
+# we build a df with the otained embedding for each user alligned across time
 df = pd.DataFrame(
     np.vstack(transformer.embeddings_),
     columns=('UMAP_1', 'UMAP_2')
 )
 df['session'] = np.concatenate(
-    [[t_step] * len(embeddings[t_step]) for t_step in range(len(embeddings))]
+    [[session] * len(embeddings[session]) for session in range(T_STEPS)]
 )
-
 df['user_id'] = np.hstack(
-    [DATA_CONTAINER['user_id'][session] for session in range(5)]
+    [DATA_CONTAINER['user_id'][session] for session in range(T_STEPS)]
 )
 df['context'] = np.hstack(
-    [DATA_CONTAINER['context'][session] for session in range(5)]
+    [DATA_CONTAINER['context'][session] for session in range(T_STEPS)]
 )
 
+# we add for each embedding the associated target
 for target in TARGETS:
 
     colors = []

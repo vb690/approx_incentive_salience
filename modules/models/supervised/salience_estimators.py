@@ -10,8 +10,7 @@ from ...utils.model_utils.metrics_losses import smape_k
 class RNN(_AbstractHyperEstimator):
     """
     """
-    def __init__(self, n_features, prob=False, model_tag=None,
-                 adjust_for_env=False):
+    def __init__(self, n_features, prob=False, model_tag=None):
         """
         Args:
             -
@@ -27,7 +26,6 @@ class RNN(_AbstractHyperEstimator):
         else:
             self.model_tag = model_tag
         self.prob = prob
-        self.adjust_for_env = adjust_for_env
 
     def build(self, hp):
         """
