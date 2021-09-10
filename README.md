@@ -24,7 +24,7 @@ Given a number of different datasets coming from various contexts (here differen
 |   YYY   |       1       |    40   |          4          |       7      |    43    |         2        |   hms   |
 |   YYY   |       2       |    50   |          35         |      38      |    12    |         2        |   hms   |
 
-**DATASET 3*
+**DATASET 3**
 
 | user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
