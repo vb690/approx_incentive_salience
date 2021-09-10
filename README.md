@@ -5,19 +5,32 @@
 
 ## Data
 
-Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work.  
+Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work. Howevere, we will try to provide an illustrative example on the data format expected by this project.
 
-We will now provide an illustrative example on the data format expected by this project.
+Given a number of different datasets coming from various contexts (here different videogames):
+
+**DATASET 1**
 
 | user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   XXX   |       1       |    10   |          30         |      35      |    14    |         6        |   lis   |
 |   XXX   |       2       |    20   |          5          |      15      |     1    |         6        |   lis   |
 |   XXX   |       3       |    10   |          6          |      12      |     3    |         6        |   lis   |
+
+**DATASET 2**
+
+| user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
+|:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   YYY   |       1       |    40   |          4          |       7      |    43    |         2        |   hms   |
 |   YYY   |       2       |    50   |          35         |      38      |    12    |         2        |   hms   |
+
+**DATASET 3*
+
+| user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
+|:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   ZZZ   |       1       |    12   |          21         |      21      |     3    |         2        |   jc3   |
 |   ZZZ   |       2       |    13   |          8          |       9      |    26    |         2        |   jc3   |
+
 
 ## Features
 
