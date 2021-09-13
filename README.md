@@ -15,12 +15,12 @@ The behavioural features employed for this project comes from the area of applic
 * `session_played_time`: total duration of the interaction.
 * `session_time`: ammount of time spent actively interacting with the game (it is always a fraction of `session_played_time`).
 * `activity`: total number of different actions perfromed during the interaction.
-* `maximum_sessions`: maximum number of interactons recorded for a specific individual.
+* `max_sessions`: maximum number of interactons recorded for a specific individual.
 * `context`: context from which the interaction comes from.
 
 **DATASET 1**
 
-| user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
+| user_id | session_order | absence | session_played_time | session_time | activity | max_sessions | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   XXX   |       1       |    10   |          30         |      35      |    14    |         6        |   lis   |
 |   XXX   |       2       |    20   |          5          |      15      |     1    |         6        |   lis   |
@@ -28,14 +28,14 @@ The behavioural features employed for this project comes from the area of applic
 
 **DATASET 2**
 
-| user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
+| user_id | session_order | absence | session_played_time | session_time | activity | max_sessions | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   YYY   |       1       |    40   |          4          |       7      |    43    |         2        |   hms   |
 |   YYY   |       2       |    50   |          35         |      38      |    12    |         2        |   hms   |
 
 **DATASET 3**
 
-| user_id | session_order | absence | session_played_time | session_time | activity | maximum_sessions | context |
+| user_id | session_order | absence | session_played_time | session_time | activity | max_sessions | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   ZZZ   |       1       |    12   |          21         |      21      |     3    |         2        |   jc3   |
 |   ZZZ   |       2       |    13   |          8          |       9      |    26    |         2        |   jc3   |
