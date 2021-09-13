@@ -5,9 +5,18 @@
 
 ## Data
 
-Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work. Howevere, we will try to provide an illustrative example on the data format expected by this project.
+Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work. Howevere, we will try to provide an illustrative (synthetic) example on the data format expected by this project.
 
-Given a number of different datasets coming from various contexts (here different videogames):
+**BEHAVIOURAL FEATURES**
+The behavioural features employed for this project comes from the area of application of predicting the intensity of future interacions between individuals and videogames. They describe the intensity of interactions (i.e. game sessions) between an individual (i.e. an user) and an object (i.e. a videogames).
+
+* `session_order`: order of the interaction in the sequence of considered interactions.
+* `absence`: time elapsed since the previous interaction.
+* `session_played_time`: total duration of the interaction.
+* `session_time`: ammount of time spent actively interacting with the game (it is always a fraction of `session_played_time`).
+* `activity`: total number of different actions perfromed during the interaction.
+* `maximum_sessions`: maximum number of interactons recorded for a specific individual.
+* `context`: context from which the interaction comes from.
 
 **DATASET 1**
 
@@ -31,8 +40,7 @@ Given a number of different datasets coming from various contexts (here differen
 |   ZZZ   |       1       |    12   |          21         |      21      |     3    |         2        |   jc3   |
 |   ZZZ   |       2       |    13   |          8          |       9      |    26    |         2        |   jc3   |
 
-
-## Features
+In order to generalize our approach to other fields of application, the required data should entail the concept of "interaction" meaning a fixed ammount of time during which an individual interact with an object. The intensity of this interaction must be quantifiable, the behavioural features we proposed can be a starting point but other ad-hoc measure can be employed. Each considered individual should at least have had 2 interactions with an object. Knowing the eaxact nature of the considered objects is not mandatory but each object must be distinguisheable from the others. 
 
 ### Model for Saliency Estimation and Prediction of Future Interactions Intensity
 
@@ -49,7 +57,7 @@ Given a number of different datasets coming from various contexts (here differen
 ## How to Use
 
 ### Scripts
-1. Data Preparation
+1. Data Preparation. Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each Dataset seprately, then create targets as the lead-1 version of each feature, concaten
 2. Models Optimization
 3. Models Comparison
 4. Embedding Extraction
