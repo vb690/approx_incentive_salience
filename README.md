@@ -10,17 +10,17 @@ Due to commerical sensitivity and  [data protection regulations](https://en.wiki
 **BEHAVIOURAL FEATURES**
 The behavioural features employed for this project comes from the area of application of predicting the intensity of future interacions between individuals and videogames. They describe the intensity of interactions (i.e. game sessions) between an individual (i.e. an user) and an object (i.e. a videogames).
 
-* `session_order`: order of the interaction in the sequence of considered interactions.
+* `sess_order`: order of the interaction in the sequence of considered interactions.
 * `absence`: time elapsed since the previous interaction.
-* `session_played_time`: total duration of the interaction.
-* `session_time`: ammount of time spent actively interacting with the game (it is always a fraction of `session_played_time`).
+* `sess_played_time`: total duration of the interaction.
+* `sess_time`: ammount of time spent actively interacting with the game (it is always a fraction of `session_played_time`).
 * `activity`: total number of different actions perfromed during the interaction.
-* `max_sessions`: maximum number of interactons recorded for a specific individual.
+* `max_sess`: maximum number of interactons recorded for a specific individual.
 * `context`: context from which the interaction comes from.
 
 **DATASET 1**
 
-| user_id | session_order | absence | session_played_time | session_time | activity | max_sessions | context |
+| user_id | sess_order | absence | sess_played_time | sess_time | activity | max_sess | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   XXX   |       1       |    10   |          30         |      35      |    14    |         6        |   lis   |
 |   XXX   |       2       |    20   |          5          |      15      |     1    |         6        |   lis   |
@@ -28,14 +28,14 @@ The behavioural features employed for this project comes from the area of applic
 
 **DATASET 2**
 
-| user_id | session_order | absence | session_played_time | session_time | activity | max_sessions | context |
+| user_id | sess_order | absence | sess_played_time | sess_time | activity | max_sess | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   YYY   |       1       |    40   |          4          |       7      |    43    |         2        |   hms   |
 |   YYY   |       2       |    50   |          35         |      38      |    12    |         2        |   hms   |
 
 **DATASET 3**
 
-| user_id | session_order | absence | session_played_time | session_time | activity | max_sessions | context |
+| user_id | sess_order | absence | sess_played_time | sess_time | activity | max_sess | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   ZZZ   |       1       |    12   |          21         |      21      |     3    |         2        |   jc3   |
 |   ZZZ   |       2       |    13   |          8          |       9      |    26    |         2        |   jc3   |
