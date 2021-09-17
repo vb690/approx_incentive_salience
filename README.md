@@ -60,10 +60,11 @@ In order to generalize our approach to other fields of application, the required
 ## How to Use
 
 ### Scripts
-1. Data Preparation. Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each Dataset seprately, then create targets as the lead-1 version of each feature, concaten
-2. Models Optimization
-3. Models Comparison
-4. Embedding Extraction
+1. **Data Preparation**   
+Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each Dataset seprately, then create targets as the lead-1 version of each feature, concaten
+3. Models Optimization
+4. Models Comparison
+5. Embedding Extraction
     * Dimensionality Reduction
     * Alligned Dimesnionality Reduction
     * Data Container
