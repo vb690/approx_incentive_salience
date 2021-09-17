@@ -5,9 +5,9 @@
 
 ## Data
 
-Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work. Howevere, we will try to provide an illustrative (synthetic) example on the data format expected by this project.
+Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work. Howevere, we will try to provide an illustrative example on the data format expected by this project.
 
-**BEHAVIOURAL FEATURES**  
+### Behavioural Features
 The behavioural features employed for this project comes from the area of application of predicting the intensity of future interacions between individuals and videogames. They describe the intensity of interactions (i.e. game sessions) between an individual (i.e. an user) and an object (i.e. a videogames).
 
 * `sess_order`: order of the interaction in the sequence of considered interactions.
@@ -18,7 +18,10 @@ The behavioural features employed for this project comes from the area of applic
 * `max_sess`: maximum number of interactons recorded for a specific individual.
 * `context`: context from which the interaction comes from.
 
-**DATASET 1**
+### Examples Datasets
+The interaction data obtained from each object, should be stored in separate `.csv` files located in the `data\csv` directory inside the project root directory. We report here some synthetic examples of the dataset we employed.  
+  
+**Dataset 1**
 
 | user_id | sess_order | absence | sess_played_time | sess_time | activity | max_sess | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
@@ -26,14 +29,14 @@ The behavioural features employed for this project comes from the area of applic
 |   XXX   |       2       |    20   |          5          |      15      |     1    |         6        |   lis   |
 |   XXX   |       3       |    10   |          6          |      12      |     3    |         6        |   lis   |
 
-**DATASET 2**
+**Dataset 2**
 
 | user_id | sess_order | absence | sess_played_time | sess_time | activity | max_sess | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
 |   YYY   |       1       |    40   |          4          |       7      |    43    |         2        |   hms   |
 |   YYY   |       2       |    50   |          35         |      38      |    12    |         2        |   hms   |
 
-**DATASET 3**
+**Dataset 3**
 
 | user_id | sess_order | absence | sess_played_time | sess_time | activity | max_sess | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
