@@ -45,7 +45,7 @@ The interaction data obtained from each object, should be stored in separate `.c
 
 In order to generalize our approach to other fields of application, the required data should entail the concept of "interaction" meaning a fixed ammount of time during which an individual interact with an object. The intensity of this interaction must be quantifiable, the behavioural features we proposed can be a starting point but other ad-hoc measure can be employed. Each considered individual should at least have had 2 interactions with an object. Knowing the eaxact nature of the considered objects is not mandatory but each object must be distinguisheable from the others. 
 
-### Model for Saliency Estimation and Prediction of Future Interactions Intensity
+### Estimating Attributed Saliency for Predicting the Intensity of Future Interaction
 
 ### Architecture
 
