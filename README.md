@@ -47,6 +47,7 @@ In order to generalize our approach to other fields of application, the required
 
 ### Estimating Attributed Saliency for Predicting the Intensity of Future Interaction
 
+
 ### Architecture
 
 <p align="center">
@@ -54,6 +55,90 @@ In order to generalize our approach to other fields of application, the required
 </p>
 
 ### Hyper-parameters Tuning
+
+Each trainable model in this project can have its hyper-parameters optimized through a range of tuning algorithms. Each model is a subclass of an `AbstractHyperEstimator` (that in turn is a subclass of a KerasTuner [`HyperModel`](https://keras.io/guides/keras_tuner/getting_started/#you-can-use-a-hypermodel-subclass-instead-of-a-modelbuilding-function)) providing functions that allow to define blocks of tunable Keras layers. The available layers are `Embedding`, `Dense` and `LSTM`.  
+  
+Defining a block only requires to specify the maximum number of layers and hidden units we want to explore (the lower bounds, step size and range of possible activation functions are pre-defined). If we want for example define a tunable block of fully connected layers we would call the relative method:
+
+```python
+_generate_fully_connected_block(
+        hp=hp, # hp object provided by KerasTuner during optimization
+        input_tensor=input_tensor, # input to the block of densely connected layers
+        tag='dense', # identifier for all the layers in the block
+        max_layers=10
+        max_dim=512,
+    )
+```
+Series of tunable blocks can then be combined for defining entire models
+```python
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Activation
+from tensorflow.keras.layers import Dense
+
+from modules.utils.model_utils.supervised import _AbstractHyperEstimator
+
+class MyModel(_AbstractHyperEstimator):
+
+  def __init__(self, model_tag, prob=False):
+    self.model_tag = model_tag,
+    self.prob = prob
+    
+  def build(self, hp):
+    self.dropout_rate = hp.Float(
+        min_value=0.0,
+        max_value=0.4,
+        step=0.05,
+        name=f'{self.model_tag}_dropout_rate'
+    )
+    input_tensor = Input(
+        shape=(None, ),
+        name='my_input'
+    )
+    embedding = self._generate_embedding_block(
+        hp=hp,
+        input_tensor=input_tensor,
+        input_dim=100, # this is the size of the vocabulary
+        max_dim=512,
+        tag='embedding'
+    )
+
+    recurrent = self._generate_recurrent_block(
+        hp=hp,
+        input_tensor=embedding,
+        tag='recurrent',
+        max_layers=3,
+        max_dim=512
+    )
+
+    dense = self._generate_fully_connected_block(
+        hp=hp,
+        input_tensor=recurrent,
+        tag='dense',
+        prob=self.prob,
+        max_layers=10
+        max_dim=512,
+    )
+    
+    out = Dense(
+        units=1,
+        name='out_dense'
+    )(dense)
+    out = Activation(
+      'sigmoid',
+      name='out_act'
+    )(out)
+    
+    model = Model(
+      inputs=input,
+      outputs=out,
+    )
+    
+    model.compile(
+      optimizer='adam',
+      loss='binary_crossentropy
+    )
+  return model
+```
 
 ### Embedding Extraction
 
