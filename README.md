@@ -148,9 +148,9 @@ class MyModel(_AbstractHyperEstimator):
 ### Scripts
 1. **Data Preparation**   
 Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each Dataset seprately, then create targets as the lead-1 version of each feature, concaten
-3. Models Optimization
-4. Models Comparison
-5. Embedding Extraction
+3. **Models Optimization**
+4. **Models Comparison**
+5. **Embedding Extraction**
     * Dimensionality Reduction
     * Alligned Dimesnionality Reduction
     * Data Container
