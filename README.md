@@ -1,14 +1,13 @@
-## Approximating Attributed Incentive Salience in Large Scale Scenarios
-### A Representation Learning Approach Based on Artificial Neural Networks
+## Approximating Attributed Incentive Salience in Large Scale Scenarios. <br> A Representation Learning Approach Based on Artificial Neural Networks
 
 ## Motivation
 
 ## Data
 
-Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work. Howevere, we will try to provide an illustrative example on the data format expected by this project.
+Due to commerical sensitivity and  [data protection regulations](https://en.wikipedia.org/wiki/General_Data_Protection_Regulation) we are not allowed to pubblicly release the data employed in the present work. However, we will try to provide illustrative examples on the expected data format so to facilitate replication and extension to different contexts.
 
 ### Behavioural Features
-The behavioural features employed for this project comes from the area of application of predicting the intensity of future interacions between individuals and videogames. They describe the intensity of interactions (i.e. game sessions) between an individual (i.e. an user) and an object (i.e. a videogames).
+The behavioural features employed for this project comes from a specific area of application, namely: predicting the intensity of future interacions between individuals and videogames. They aim to be behavioural descriptor of how strong the interactions (i.e. game sessions) between an individual (i.e. an user) and an object (i.e. a videogames) are.
 
 * `sess_order`: order of the interaction in the sequence of considered interactions.
 * `absence`: time elapsed since the previous interaction.
@@ -36,14 +35,14 @@ The interaction data obtained from each object, should be stored in separate `.c
 |   YYY   |       1       |    40   |          4          |       7      |    43    |         2        |   hms   |
 |   YYY   |       2       |    50   |          35         |      38      |    12    |         2        |   hms   |
 
-**Dataset 3**
+**Dataset N**
 
 | user_id | sess_order | absence | sess_played_time | sess_time | activity | max_sess | context |
 |:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|
-|   ZZZ   |       1       |    12   |          21         |      21      |     3    |         2        |   jc3   |
-|   ZZZ   |       2       |    13   |          8          |       9      |    26    |         2        |   jc3   |
+|   ZZZ   |       1       |    12   |          21         |      21      |     3    |         2        |   N   |
+|   ZZZ   |       2       |    13   |          8          |       9      |    26    |         2        |   N   |
 
-In order to generalize our approach to other fields of application, the required data should entail the concept of "interaction" meaning a fixed ammount of time during which an individual interact with an object. The intensity of this interaction must be quantifiable, the behavioural features we proposed can be a starting point but other ad-hoc measure can be employed. Each considered individual should at least have had 2 interactions with an object. Knowing the eaxact nature of the considered objects is not mandatory but each object must be distinguisheable from the others. 
+In order to generalize our approach to other fields of application, the required data should entail the concept of "interaction" meaning a fixed ammount of time during which an individual interact with an object. The intensity of this interaction must be quantifiable, the behavioural features we proposed can be a starting point but other ad-hoc measures can be employed. Each considered individual should at least have had 2 interactions with an object. Knowing the eaxact nature of the considered objects is not mandatory but each object must be distinguisheable from the others. 
 
 ### Estimating Attributed Saliency for Predicting the Intensity of Future Interaction
 
@@ -61,7 +60,7 @@ Each trainable model in this project can have its hyper-parameters optimized thr
 Defining a block only requires to specify the maximum number of layers and hidden units we want to explore (the lower bounds, step size and range of possible activation functions are pre-defined). If we want for example define a tunable block of fully connected layers we would call the relative method:
 
 ```python
-_generate_fully_connected_block(
+fc_block = _generate_fully_connected_block(
         hp=hp, # hp object provided by KerasTuner during optimization
         input_tensor=input_tensor, # input to the block of densely connected layers
         tag='dense', # identifier for all the layers in the block
@@ -69,7 +68,7 @@ _generate_fully_connected_block(
         max_dim=512,
     )
 ```
-Series of tunable blocks can then be combined for defining entire models
+Series of tunable blocks can then be combined for defining entire computational graphs (i.e. models):
 ```python
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Activation
@@ -81,7 +80,9 @@ class MyModel(_AbstractHyperEstimator):
 
   def __init__(self, model_tag, prob=False):
     self.model_tag = model_tag,
-    self.prob = prob
+    # this determines if the model will use monte carlo dropout
+    # for approximating bayesian inference (i.e. providing probabilistic predictions)
+    self.prob = prob 
     
   def build(self, hp):
     self.dropout_rate = hp.Float(
