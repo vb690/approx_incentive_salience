@@ -147,7 +147,7 @@ class MyModel(_AbstractHyperEstimator):
 
 ### Scripts
 1. **Data Preparation**   
-Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each Dataset seprately, then create targets as the lead-1 version of each feature, concaten
+Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each Dataset seprately, then create targets as the lead-1 version of each feature, concatenate all the the datasets in a single one, shuffle and splitting it in a tuning and validation set (making sure to not disrupt the sequential nature of the data) and finally storing the datasets as numpy arrays of size `(batch_size, sequence_len, n_features)`. Each element in a batch correspond to a single user while `sequence_len` is the number of available sessions for that specific user. Here `sequence_len` has to be consistent within a batch but can vary freely between batches. This process of batch creation was repeated for model's input (i.e. behavioural and context features).
 3. **Models Optimization**
 4. **Models Comparison**
 5. **Embedding Extraction**
