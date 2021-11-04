@@ -147,28 +147,61 @@ class MyModel(_AbstractHyperEstimator):
 
 ### Scripts
 1. **Data Preparation**   
-Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each Dataset seprately, then create targets as the lead-1 version of each feature, concatenate all the the datasets in a single one, shuffle and splitting it in a tuning and validation set (making sure to not disrupt the sequential nature of the data) and finally storing the datasets as numpy arrays of size `(batch_size, sequence_len, n_features)`. Each element in a batch correspond to a single user while `sequence_len` is the number of available sessions for that specific user. Here `sequence_len` has to be consistent within a batch but can vary freely between batches. This process of batch creation was repeated for model's input (i.e. behavioural and context features).
+Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each dataset seprately, then create targets as the lead-1 version of each feature, concatenate all the the datasets in a single one, shuffle and splitting it in a tuning and validation set (making sure to not disrupt the sequential nature of the data) and finally storing the datasets as numpy arrays of size `(batch_size, sequence_len, n_features)`. Each element in a batch correspond to a single user while `sequence_len` is the number of available sessions for that specific user. Here `sequence_len` has to be consistent within a batch but can vary freely between batches. This process of batch creation was repeated for all the model's inputs (i.e. behavioural and context features).
 3. **Models Optimization**
-4. **Models Comparison**
-5. **Embedding Extraction**
+Given a number of different trainable models (here ElasticNet, MultilayerPerceptron and our architecture) the `model_optimization` script will tune their hyperparametrs using the procedure highlighted in the **Hyper-parameters Tuning** section. The optimization can be initiated calling the `tune` method of a model
+
+```python
+from tensorflow.keras.callbacks import EarlyStopping
+
+from kerastuner.tuners import Hyperband
+
+model = MyModel(model_tag='my_model')
+
+# we instatiate a callback for halting training
+stopper = EarlyStopping(
+    monitor='val_loss',
+    min_delta=0.0001,
+    patience=5,
+    verbose=1,
+    mode='auto',
+    restore_best_weights=True
+)
+
+model.tune(
+    tuner=Hyperband, # the chosen tuner
+    generator=my_generator, # this is either a Keras generator or a list of numpy arrays
+    verbose=2,
+    validation_data=my_validation_data_generator,
+    # the following are tuner specific kwargs
+    epochs=100,
+    max_epochs=100,
+    hyperband_iterations=2,
+    objective='val_loss',
+    callbacks=[stopper],
+    directory='optim',
+    project_name='my_model_hb'
+)
+```
+5. **Models Comparison**
+6. **Embedding Extraction**
     * Dimensionality Reduction
     * Alligned Dimesnionality Reduction
     * Data Container
 
-### Notebooks
-1. [Exploratory Data Analysis](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/EDA_analysis.html)
-1. [Models Performance Analysis](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/model_performance_analysis.html)
-2. Embeddings
-    * [UMAP Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/embedding_analysis.html)
-    * [Activations Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/activation_analysis.html) 
-    * [Temporal UMAP Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/umap_traces_visualization.html)
-3. [Partitioning and Behavioural Profiles Extraction](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/cluster_analysis.html)
-
 ## Results
 
-### Performance Analysis
+### EDA and Performance Analysis
+
+1. [Exploratory Data Analysis](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/EDA_analysis.html)
+2. [Models Performance Analysis](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/model_performance_analysis.html)
 
 ### Representation Analysis
 
+1. [UMAP Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/embedding_analysis.html)
+2. [Activations Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/activation_analysis.html) 
+3. [Temporal UMAP Analyses](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/umap_traces_visualization.html)
+
 ### Partition Analysis
 
+1. [Partitioning and Behavioural Profiles Extraction](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/cluster_analysis.html)
