@@ -191,6 +191,8 @@ model.tune(
 
 ## Results
 
+We link here to frozen HTML versions of Jupyter Notebook containing a large part of analyses developed for this project. Here the code used for running the analyses as well as some ancillary results (not reported in the pre-print due to space constrains) can be found.
+
 ### EDA and Performance Analysis
 
 1. [Exploratory Data Analysis](https://htmlpreview.github.io/?https://github.com/vb690/approx_incentive_salience/blob/main/notebooks_html/EDA_analysis.html)
