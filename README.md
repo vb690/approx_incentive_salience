@@ -149,7 +149,7 @@ class MyModel(_AbstractHyperEstimator):
 1. **Data Preparation**   
 Given a number of different datasets coming from various contexts (here different videogames) and a set of behavioural features the `data_preparation` script will first pre-process each dataset seprately, then create targets as the lead-1 version of each feature, concatenate all the the datasets in a single one, shuffle and splitting it in a tuning and validation set (making sure to not disrupt the sequential nature of the data) and finally storing the datasets as numpy arrays of size `(batch_size, sequence_len, n_features)`. Each element in a batch correspond to a single user while `sequence_len` is the number of available sessions for that specific user. Here `sequence_len` has to be consistent within a batch but can vary freely between batches. This process of batch creation was repeated for all the model's inputs (i.e. behavioural and context features).
 3. **Models Optimization**
-Given a number of different trainable models (here ElasticNet, MultilayerPerceptron and our architecture) the `model_optimization` script will tune their hyperparametrs using the procedure highlighted in the **Hyper-parameters Tuning** section. The optimization can be initiated calling the `tune` method of a model
+Given a number of different trainable models (here ElasticNet, MultilayerPerceptron and our architecture) the `model_optimization` script will search for the best hyperparametrs using the tuning data and the procedure highlighted in the **Hyper-parameters Tuning** section. The optimization can be initiated calling the `tune` method of a model
 
 ```python
 from tensorflow.keras.callbacks import EarlyStopping
@@ -184,7 +184,17 @@ model.tune(
 )
 ```
 5. **Models Comparison**
-6. **Embedding Extraction**
+Once all the trainable models have had their hyperparameters tuned, this script will proceed at evaluating their perfromance on the validation set uing a K-Fold cross-validation strategy. The data will be divided in `K` non overlapping, equally sized groups and each model will be be iteratively fitted on `K-1` folds and tested on the remaining one. The performance of each model will be recorded in a disaggregated fashion, computing the Symmetric Mean Percentage Error (SMAPE) separately for each context, target and time step. This script will then save a `.csv` for each fold in `results\tables\models_perfromance` including information about model size and efficiency. The `.csv` will have the following format:
+
+| context | metric | target | value | model | session | fitting_time | parameters | epochs | fold_n |
+|:-------:|:-------------:|:-------:|:-------------------:|:------------:|:--------:|:----------------:|:-------:|:-------:|:-------:|
+|   hmg   |       SMAPE       |    Future Session Time   |          0.95         |      Lag 1      |     2    |         0        |   1   |        1        |   0   |
+|   hmg   |       SMAPE       |    Future Session Time   |          0.63          |       Lag 1      |    3    |         0        |   1   |        1        |   0   |
+|   ...   |       ...       |    ...  |          ...         |      ...     |    ...    |         ...        |   ...   |        ...        |   ...   |
+|   jc3   |       SMAPE       |    Future Session Time   |          0.53          |       MLP      |    2    |         7088        |   641733   |        15        |   1   |
+|   jc3   |       SMAPE       |    Future Session Time   |          0.50          |       MLP      |    3    |         7088        |   641733   |        15        |   1   |
+
+7. **Embedding Extraction**
     * Dimensionality Reduction
     * Alligned Dimesnionality Reduction
     * Data Container
