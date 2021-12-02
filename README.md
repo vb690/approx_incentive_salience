@@ -195,9 +195,12 @@ Once all the trainable models have had their hyperparameters tuned, this script 
 |   jc3   |       SMAPE       |    Future Session Time   |          0.50          |       MLP      |    3    |         7088        |   641733   |        15        |   1   |
 
 7. **Embedding Extraction**
-    * Dimensionality Reduction
-    * Alligned Dimesnionality Reduction
-    * Data Container
+After evaluating the performance of all the model, a series of scripts are used for extracting and processing the embedding learned by the best perfroming model.
+    * *Embedding Extraction*: This script first train a new model on 9 folds of data, build an encoder made of all the operations carried out by the layers leading to the recurrent part of the model (i.e. the portion highlighted in red in the architecture section above) and finally transform and locally save the remaining fold of data using this encoder.
+    * *Data Container*: This script aims to create an utility `DataContainer` object. A `DataContainer` offers a convenient interface for storing and accessing a series of metadata (e.g. inputs, predictions, ground trtuth values) used for the visual analysis of the embeddings.
+    * *Dimensionality Reduction*:
+    * *Alligned Dimesnionality Reduction*:
+    
 
 ## Results
 
