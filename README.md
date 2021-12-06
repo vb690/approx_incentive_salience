@@ -1,6 +1,9 @@
 ## Approximating Attributed Incentive Salience in Large Scale Scenarios. <br> A Representation Learning Approach Based on Artificial Neural Networks
 
 ## Motivation
+Individuals' body and mind are subject to continuous changes driven by physiological, cognitive or affective processes. These changes are the constituent parts of so called "internal states"  which can be thought as dynamical latent constructs able to modulate observable behaviour. Among these latent states, those related to reward and motivation processes are of pivotal importance.  
+  
+In light of this, we propose a methodology for approximating such latent states using an ANN specifically designed on the basis of prior theoretical knowledge. By training the model to estimate the duration and intensity of future interactions between individuals and a diverse range of video games we obtain a latent representation showing similarities with the functional properties of attributed incentive salience, a particular type of psychobiological latent state related to motivation.
 
 ## Data
 
