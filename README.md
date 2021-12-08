@@ -1,5 +1,9 @@
 ## Approximating Attributed Incentive Salience in Large Scale Scenarios. <br> A Representation Learning Approach Based on Artificial Neural Networks
 
+<p align="center">
+  <img width="900" height="350" src="https://github.com/vb690/approx_incentive_salience/blob/main/images/umap_snapshot_0.png">
+</p>
+
 ## Motivation
 Individuals' body and mind are subject to continuous changes driven by physiological, cognitive or affective processes. These changes are the constituent parts of so called "internal states"  which can be thought as dynamical latent constructs able to modulate observable behaviour. Among these latent states, those related to reward and motivation processes are of pivotal importance.  
   
