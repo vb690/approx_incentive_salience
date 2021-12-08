@@ -200,9 +200,9 @@ Once all the trainable models have had their hyperparameters tuned, this script 
 7. **Embedding Extraction**
 After evaluating the performance of all the model, a series of scripts are used for extracting and processing the embedding learned by the best perfroming model.  
   
-    * *Embedding Extraction*: This script first train a new model on 9 folds of data, build an encoder made of all the operations carried out by the layers leading to the recurrent part of the model (i.e. the portion highlighted in red in the architecture section above) and finally transform and locally save the remaining fold of data using this encoder.
-    * *Data Container*: This script aims to create an utility `DataContainer` object. A `DataContainer` offers a convenient interface for storing and accessing a series of metadata (e.g. inputs, predictions, ground trtuth values) used for model evaluation and visual analysis of the embeddings.
-    * *Dimensionality Reduction*: This script perform dimensionality reduction on the extracted embeddings using both UMAP and PCA. the reduction is performed separatly for each time step.
+    * *Embedding Extraction*: This script first fits a new model on 9 folds of data, builds an encoder made of all the operations carried out by the layers leading to the recurrent part of the model (i.e. the portion highlighted in red in the architecture section above) and finally transforms the remaining fold of data using the encoder and saves the result (i.e. the embedding) locally.
+    * *Data Container*: This script creates an utility `DataContainer` object. A `DataContainer` offers a convenient interface for storing and accessing a series of metadata (e.g. inputs, predictions, ground trtuth values) used for model evaluation and visual analysis of the embeddings.
+    * *Dimensionality Reduction*: This script performs dimensionality reduction on the extracted embeddings using both UMAP and PCA. the reduction is performed separatly for each time step.
     * *Alligned Dimesnionality Reduction*: This script perform dimensionality reduction on the extracted embeddings using UMAP. Differently from the previous script, each embedding is reduced in such a way that the relationship between each point (i.e. the embedding generated for a specific user) is maintained over time. See [this page](https://umap-learn.readthedocs.io/en/latest/aligned_umap_politics_demo.html) on the UMAP documentation for further clarification.
     
 
