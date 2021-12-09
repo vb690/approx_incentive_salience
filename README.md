@@ -1,7 +1,7 @@
 ## Approximating Attributed Incentive Salience in Large Scale Scenarios. <br> A Representation Learning Approach Based on Artificial Neural Networks
 
 <p align="center">
-  <img width="900" height="350" src="https://github.com/vb690/approx_incentive_salience/blob/main/images/umap_snapshot_0.png">
+  <img width="900" height="350" src="https://github.com/vb690/approx_incentive_salience/blob/main/readme_pic/umap_snapshot_0.png">
 </p>
 
 ## Motivation
@@ -149,6 +149,10 @@ class MyModel(_AbstractHyperEstimator):
 ```
 
 ### Embedding Extraction
+
+<p align="center">
+  <img width="800" height="400" src="https://github.com/vb690/approx_incentive_salience/blob/main/readme_pic/embedding_extractor.svg">
+</p>
 
 ## How to Use
 
