@@ -60,6 +60,8 @@ In order to generalize our approach to other fields of application, the required
   <img width="800" height="400" src="https://github.com/vb690/approx_incentive_salience/blob/main/readme_pic/rnn_architecture.png">
 </p>
 
+Blue, orange and green shapes represent respectively feedforward, embedding and LSTM layers. Embedding layers are a type of feedforward layers specifically designed for dealing with categorical inputs. Gray shapes indicate operations with no learnable parameters, such as array instantiation and concatenation. Stacked, transparent colouring indicates arrays with a sequential structure. Straight and curved arrows refer to the presence of feed-forward or recurrent information flow. The red highlight shows the portion of the model we hypothesize is inferring an approximation of attributed incentive salience
+
 ### Hyper-parameters Tuning
 
 Each trainable model in this project can have its hyper-parameters optimized through a range of tuning algorithms. Each model is a subclass of an `AbstractHyperEstimator` (that in turn is a subclass of a KerasTuner [`HyperModel`](https://keras.io/guides/keras_tuner/getting_started/#you-can-use-a-hypermodel-subclass-instead-of-a-modelbuilding-function)) providing functions that allow to define blocks of tunable Keras layers. The available layers are `Embedding`, `Dense` and `LSTM`.  
