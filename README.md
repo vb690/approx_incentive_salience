@@ -152,9 +152,13 @@ class MyModel(_AbstractHyperEstimator):
 
 ### Embedding Extraction
 
+Once our model is trained, it is possible to generate an encoder composed of all the transformations and relative parameters leading to the recurrent layer (red highlight in the Architecture section's figure). This is the portion of the model that we expected to approximate the amount of attributed incentive salience. It uses the intensity of past interactions, between an individual (here a player) and an object (here a specific game), for producing a single representation used to estimate the intensity of future ones.
+
 <p align="center">
   <img width="800" height="400" src="https://github.com/vb690/approx_incentive_salience/blob/main/readme_pic/embedding_extractor.svg">
 </p>
+
+When data from new individuals are passed as an input to the encoder, the model produces an array `Z` of shape `N X h` with `h` being the number of units in the recurrent layer and `N` the number of individuals.
 
 ## How to Use
 
