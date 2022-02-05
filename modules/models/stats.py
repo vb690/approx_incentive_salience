@@ -58,7 +58,20 @@ class LMMPerformance:
         return unique_models, unique_contexts, unique_times, unique_folds, \
             models, contexts, times, folds, outcomes
 
-    def __build(self, target, priors):
+    def __build(self, target, priors={
+                    'Hyper Mu Context': {'mu': 0, 'sigma': 1},
+                    'Hyper Sigma Context': {'beta': 5},
+
+                    'Hyper Mu Time': {'mu': 0, 'sigma': 1},
+                    'Hyper Sigma Time': {'beta': 5},
+
+                    'Hyper Mu Folds': {'mu': 0, 'sigma': 1},
+                    'Hyper Sigma Folds': {'beta': 5},
+
+                    'Mu Slope': {'mu': 0, 'sigma': 1},
+                    'Sigma': {'beta': 5}
+                    }
+                ):
         """
         """
         unique_models, unique_contexts, unique_times, unique_folds, \
@@ -166,9 +179,7 @@ class LMMPerformance:
             # build the beta model
             mu = pm.Deterministic(
                 'Mu',
-                pm.math.invlogit(
-                    intercept + model_slope[models_idx],
-                )
+                intercept + model_slope[models_idx]
             )
             sigma = pm.HalfCauchy(
                 name='Sigma',
@@ -252,26 +263,13 @@ class LMMPerformance:
 
         return None
 
-    def analyze(self, targets, figsize=(5, 5), approx=False, priors={
-                'Hyper Mu Context': {'mu': 0, 'sigma': 0.1},
-                'Hyper Sigma Context': {'beta': 25},
-
-                'Hyper Mu Time': {'mu': 0, 'sigma': 0.1},
-                'Hyper Sigma Time': {'beta': 25},
-
-                'Hyper Mu Folds': {'mu': 0, 'sigma': 0.1},
-                'Hyper Sigma Folds': {'beta': 25},
-
-                'Mu Slope': {'mu': 0, 'sigma': 0.1},
-                'Sigma': {'beta': 25}
-                }, **kwargs):
+    def analyze(self, targets, figsize=(5, 5), approx=False, **kwargs):
         """
         """
         for target in targets:
 
             self.__build(
-                target=target,
-                priors=priors
+                target=target
             )
 
             with self.model:
