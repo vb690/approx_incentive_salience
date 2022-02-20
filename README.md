@@ -1,4 +1,5 @@
-## Approximating the Manifold Structure of Attributed Incentive Salience <br> from Large Scale Behavioural Data <br> A Representation Learning Approach Based on Artificial Neural Networks
+## Approximating the Manifold Structure of Attributed Incentive Salience <br> from Large Scale Behavioural Data
+### A Representation Learning Approach Based on Artificial Neural Networks
 
 <p align="center">
   <img width="900" height="350" src="https://github.com/vb690/approx_incentive_salience/blob/main/readme_pic/umap_snapshot_0.png">
