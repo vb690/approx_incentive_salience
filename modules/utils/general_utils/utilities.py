@@ -14,12 +14,12 @@ import tensorflow as tf
 
 
 def generate_dir(path):
-    """Function checking the existence of a directory and generating it
+    '''
+    Function checking the existence of a directory and generating it
     if not present.
-    """
+    '''
     if not os.path.exists(path):
         os.makedirs(path)
-    return None
 
 
 def top_k_variance(df, columns, k=50, no_variance_filter=True):
@@ -41,11 +41,11 @@ def top_k_variance(df, columns, k=50, no_variance_filter=True):
 
 
 def group_wise_binning(array, n_bins, grouper=None, method=None, **kwargs):
-    """
-    """
+    '''
+    '''
     def binning(array):
-        """
-        """
+        '''
+        '''
         ranked = stats.rankdata(array)
         data_percentile = ranked/len(array)*100
         binned = np.digitize(
@@ -110,8 +110,8 @@ def group_wise_binning(array, n_bins, grouper=None, method=None, **kwargs):
 
 
 def generate_3d_pad(list_arrays, shape, pad=np.nan):
-    """
-    """
+    '''
+    '''
     padded_array = np.empty(shape=shape)
     padded_array[:] = pad
     index = 0
@@ -138,7 +138,8 @@ def generate_exp_decay_weights(length, gamma=0.1):
 
 
 def save_arrays(arrays, dir_name):
-    """Function for loading saved arrays, this assume the existence of a local
+    '''
+    Function for loading saved arrays, this assume the existence of a local
     directory named data
 
     Arguments:
@@ -150,7 +151,7 @@ def save_arrays(arrays, dir_name):
     Returs:
         - loaded_arrays: a dictionry where keys are the identifiers of the
                          arrays and value are the loaded arrays
-    """
+    '''
     save_dir = 'data\\{}'.format(dir_name)
     generate_dir(save_dir)
     for name, array in arrays.items():
@@ -160,7 +161,8 @@ def save_arrays(arrays, dir_name):
 
 
 def load_arrays(arrays, dir_name):
-    """Function for loading saved arrays, this assume the existence of a local
+    '''
+    Function for loading saved arrays, this assume the existence of a local
     directory named data
 
     Arguments:
@@ -172,7 +174,7 @@ def load_arrays(arrays, dir_name):
     Returs:
         - loaded_arrays: a dictionry where keys are the identifiers of the
                          arrays and value are the loaded arrays
-    """
+    '''
     load_dir = 'data\\{}'.format(dir_name)
     loaded_arrays = {}
     for array in arrays:
@@ -185,7 +187,8 @@ def load_arrays(arrays, dir_name):
 
 
 def save_objects(objects, dir_name):
-    """Function for saving obejcts, this assume the existence of a local
+    '''
+    Function for saving obejcts, this assume the existence of a local
     directory named results
 
     Arguments:
@@ -197,7 +200,7 @@ def save_objects(objects, dir_name):
     Returs:
         - loaded_arrays: a dictionry where keys are the identifiers of the
                          arrays and value are the loaded arrays
-    """
+    '''
     save_dir = 'results\\{}'.format(dir_name)
     generate_dir(save_dir)
     for name, obj in objects.items():
@@ -209,7 +212,8 @@ def save_objects(objects, dir_name):
 
 
 def load_objects(objects, dir_name):
-    """Function for saving obejcts, this assume the existence of a local
+    '''
+    Function for saving obejcts, this assume the existence of a local
     directory named results
 
     Arguments:
@@ -221,7 +225,7 @@ def load_objects(objects, dir_name):
     Returs:
         - loaded_arrays: a dictionry where keys are the identifiers of the
                          objects and value are the loaded objects
-    """
+    '''
     load_dir = 'results\\{}'.format(dir_name)
     loaded_objects = {}
     for obj in objects:
@@ -235,8 +239,8 @@ def load_objects(objects, dir_name):
 
 
 def save_full_model(model, path='results\\saved_models\\{}'):
-    """
-    """
+    '''
+    '''
     name = model.get_model_tag()
     path = path.format(name)
     generate_dir(path)
@@ -253,8 +257,8 @@ def save_full_model(model, path='results\\saved_models\\{}'):
 
 def load_full_model(name, custom_objects=None,
                     path='results\\saved_models\\{}', **compile_schema):
-    """
-    """
+    '''
+    '''
     path = path.format(name)
 
     keras_model = load_model(

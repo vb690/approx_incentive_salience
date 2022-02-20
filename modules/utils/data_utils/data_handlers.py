@@ -10,7 +10,8 @@ from ..data_utils.data_preprocessers import preprocessing_df
 
 
 class DataGenerator(Sequence):
-    """Class implementing a data generator
+    """
+    Class implementing a data generator
     """
     def __init__(self, list_batches, inputs, targets,
                  train=True, shuffle=True):
@@ -24,12 +25,14 @@ class DataGenerator(Sequence):
         self.on_epoch_end()
 
     def __len__(self):
-        """Denotes the number of batches per epoch'
+        """
+        Denotes the number of batches per epoch'
         """
         return int(len(self.list_batches))
 
     def __getitem__(self, index):
-        """Generate one batch of data
+        """
+        Generate one batch of data
         """
         # Pick a batch
         batch = self.list_batches[index]
@@ -38,7 +41,8 @@ class DataGenerator(Sequence):
         return X, y
 
     def on_epoch_end(self):
-        """Updates indexes after each epoch
+        """
+        Updates indexes after each epoch
         """
         if self.shuffle is True:
             np.random.shuffle(self.list_batches)
@@ -86,10 +90,9 @@ def create_features_batches(df, features_keys, train=True, id_key='user_id',
         try:
             array = array.reshape((unique_ids, key, len(features_keys)))
         except:
-            print(array.shape)
+            group.to_csv('fucked_up.csv')
         array = array[:, :-1, :]
         num_batches = (array.shape[0] + batch_size - 1) // batch_size
-
         print('Dumping group {}'.format(key))
         print('With {} unique ids'.format(unique_ids))
 
@@ -135,7 +138,6 @@ def create_embedding_batches(df, embeddings_keys, train=True, id_key='user_id',
 
         print('Dumping group {}'.format(key))
         print('With {} unique ids'.format(unique_ids))
-
         for batch_index in range(num_batches):
 
             for embedding, array in arrays.items():
@@ -184,7 +186,6 @@ def create_targets_batches(df, targets_keys, train=True, id_key='user_id',
 
         print('Dumping group {}'.format(key))
         print('With {} unique ids'.format(unique_ids))
-
         for batch_index in range(num_batches):
 
             for target, array in arrays.items():
