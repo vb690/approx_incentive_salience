@@ -23,10 +23,8 @@ TARGETS = [
     'tar_sessions',
 ]
 
-DS_FACTOR = 5
-
 BTCH = [i for i in range(len(os.listdir(FEATURES_PATH)))]
-TS_BTCH = BTCH[0::DS_FACTOR]
+TS_BTCH = BTCH[0::5]
 TR_BTCH = [btch for btch in BTCH if btch not in TS_BTCH]
 VL_BTCH = TR_BTCH[0::20]
 TR_BTCH = [btch for btch in TR_BTCH if btch not in VL_BTCH]
@@ -34,7 +32,7 @@ TR_BTCH = [btch for btch in TR_BTCH if btch not in VL_BTCH]
 ###############################################################################
 
 encoders = {
-    'rnn': '0_lstm_layer_features'
+    'td_mlp': 'sp_dropout_5_global_features'
 }
 encoder_objs = {}
 
