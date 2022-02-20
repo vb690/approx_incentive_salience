@@ -24,7 +24,7 @@ from modules.utils.general_utils.utilities import generate_3d_pad
 MODELS_RMP = {
     'td_enet': 'TD E-Net',
     'td_mlp': 'TD MLP',
-    'rnn': 'RNN',
+    'melchior': 'RNN',
     'median_model': 'Median',
     'lag_1': 'Lag 1'
 }
@@ -71,7 +71,7 @@ MODELS = {
     'median_model': None,
     'td_enet':  'adam',
     'td_mlp': 'adam',
-    'rnn': 'adam'
+    'melchior': 'adam'
 }
 MAX_TRAIN_EPOCHS = 200
 

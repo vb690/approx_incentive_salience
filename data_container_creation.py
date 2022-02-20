@@ -16,15 +16,13 @@ from modules.utils.general_utils.utilities import generate_exp_decay_weights
 
 INPUTS_PATH = 'data\\train\\inputs\\{}'
 TARGETS_PATH = 'data\\train\\targets\\{}'
-
-DS_FACTOR = 5  # how much downsapling we apply for visualization purposes
-
+MODEL_NAME = "td_mlp"
 BTCH = [
     i for i in range(
         len(os.listdir(INPUTS_PATH.format('continuous_features')))
     )
 ]
-BTCH = BTCH[0::DS_FACTOR]
+BTCH = BTCH[0::5]
 
 SNAPSHOTS = 10
 
@@ -47,7 +45,7 @@ INPUTS_METRIC = [
 ]
 
 MODEL = load_full_model(
-    name='rnn',
+    name=MODEL_NAME,
     optimizer=Adam(),
     custom_objects={'smape_k': smape_k},
     loss={
@@ -73,7 +71,6 @@ with open('results\\saved_objects\\scalers\\global.pkl', 'rb') as pickle_file:
 DATA_CONTAINER = {}
 
 ###############################################################################
-
 inputs_temporal = {
     input_metric: {
         snapshot: [] for snapshot in range(SNAPSHOTS)
@@ -243,5 +240,8 @@ DATA_CONTAINER['error'] = errors_temporal
 DATA_CONTAINER['context'] = contexts_temporal
 DATA_CONTAINER['user_id'] = users_temporal
 
-with open('results\\saved_data_containers\\rnn.pkl', 'wb') as container:
+with open(
+    f'results\\saved_data_containers\\{MODEL_NAME}.pkl',
+    'wb'
+) as container:
     pickle.dump(DATA_CONTAINER, container, pickle.HIGHEST_PROTOCOL)

@@ -6,12 +6,14 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from kerastuner.tuners import Hyperband
 
-from modules.models.supervised.salience_estimators import RNN
+from modules.models.supervised.engagement_estimators import MelchiorModel
 from modules.models.supervised.baselines import TimeDistributedENet
 from modules.models.supervised.baselines import TimeDistributedMLP
 from modules.utils.data_utils.data_handlers import DataGenerator
 
 from modules.utils.general_utils.utilities import save_full_model
+
+os.environ['PATH'] += os.pathsep + 'C:\\Program Files (x86)\\Graphviz2.38\\bin'
 
 ##############################################################################
 
@@ -52,7 +54,7 @@ MODELS = {
         n_features=4,
         adjust_for_env=False
     ),
-    'rnn': RNN(
+    'melchior': MelchiorModel(
         n_features=4,
         adjust_for_env=False
     )

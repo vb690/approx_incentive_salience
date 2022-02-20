@@ -33,7 +33,7 @@ games = [
     'hmg',
     'hms'
 ]
-
+"""
 ###############################################################################
 
 for game in games:
@@ -157,7 +157,7 @@ for game in games:
     ]
     df = df.sort_values(['user_id', 'session_order'])
     df.to_csv(f'data\\csv\\cleaned\\{game}.csv', index=False)
-
+"""
 ###############################################################################
 
 # start the data extraction
