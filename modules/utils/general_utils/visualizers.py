@@ -5,6 +5,9 @@ import numpy as np
 from scipy.stats import spearmanr
 import scipy.cluster.hierarchy as sch
 
+from sklearn.preprocessing import StandardScaler as ss
+from sklearn.decomposition import PCA
+
 import pandas as pd
 
 from minepy import cstats
@@ -64,7 +67,7 @@ def visualize_full_panel(reduction, model_name, contexts, context_remap,
                          colors_dict, colors_remap, colors_name,
                          save_name, snapshot, cmapper, figsize=(15, 6),
                          save_path='results\\figures\\embeddings\\full_panel',
-                         subsample_ratio=1., visual_verbose=True, **kwargs):
+                         subsample_ratio=1., visual_verbose=False, **kwargs):
     """
     """
     if subsample_ratio < 1:
@@ -120,8 +123,8 @@ def visualize_full_panel(reduction, model_name, contexts, context_remap,
             marker='o',
             edgecolor='',
             cmap='coolwarm',
-            vmin=0,
-            vmax=100,
+            # vmin=0,
+            # vmax=100,
             **kwargs
         )
         ax_metric.set_title(
@@ -174,7 +177,7 @@ def visualize_temporal_panel(
         temporal_colors, temporal_contexts, context_remap, color_name, cmapper,
         model_name, model_remap, snapshots=[0, 1, 2, 3], reduction_type='umap',
         subsample_ratio=1., figsize=(12, 6), binning_method=None,
-        visual_verbose=True,
+        visual_verbose=False,
         save_path='results\\figures\\embeddings\\temporal_panel', **kwargs):
     """
     """
@@ -242,8 +245,8 @@ def visualize_temporal_panel(
             c=colors,
             marker='o',
             edgecolor='',
-            vmin=0,
-            vmax=100,
+            # vmin=0,
+            # vmax=100,
             cmap='coolwarm',
             **kwargs
         )
@@ -283,7 +286,7 @@ def visualize_temporal_panel(
 
     plt.savefig(
         f'{save_path}\\{model_name}_{color_name}.png',
-        dpi=100,
+        dpi=300,
         bbox_inches='tight'
     )
     if visual_verbose:
@@ -293,7 +296,7 @@ def visualize_temporal_panel(
 
 
 def visualize_neurons_function(data, metric, snapshot, metric_rmp,
-                               neurons, figsize=(3, 3)):
+                               neurons, figsize=(3, 3), visually_verbose=False):
     """
     """
     for neuron in neurons:
@@ -361,14 +364,15 @@ def visualize_neurons_function(data, metric, snapshot, metric_rmp,
             dpi=100,
             bbox_inches='tight'
         )
-        plt.show()
+        if visually_verbose:
+            plt.show()
         plt.close('all')
 
     return None
 
 
-def visualize_temporal_corr(data_container, context=None,
-                            snapshots=[0, 1, 2, 3], thresh=0.5, mask=0.1):
+def visualize_temporal_corr(data_container, context_mapper, context=None,
+                            snapshots=[0, 1, 2, 3], thresh=0.5, mask=0.1, visually_verbose=False):
     """
     """
     fig, axs = plt.subplots(
@@ -379,15 +383,14 @@ def visualize_temporal_corr(data_container, context=None,
         emb = np.load(
             f'results\\saved_emb\\melchior_eng_emb_{snapshot}.npy'
         )
-
         emb = emb[~np.isnan(emb).any(axis=1)]
         if context is not None:
             cont = data_container["context"][snapshot]
             idx_cont = np.argwhere(cont == context).flatten()
             emb = emb[idx_cont, :]
         df = pd.DataFrame(emb)
+        d = df.corr(method="pearson").fillna(0).values
 
-        d = df.corr(method="spearman").values
         d = sch.distance.pdist(d)
         link = sch.linkage(d, method='single')
         clust_ind = sch.fcluster(link, thresh*d.max(), 'distance')
@@ -425,12 +428,155 @@ def visualize_temporal_corr(data_container, context=None,
         ticks=[-1, -0.5, 0, 0.5, 1]
     )
     cbar.set_label("Spearman's Rho")
-
-    plt.tight_layout()
+    plt.suptitle(f"Context {context_mapper[context]}")
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
     plt.savefig(
-        f'results\\figures\\embeddings\\neurons_corr\\cont_{context}.png',
-        dpi=100,
+        f'results\\figures\\embeddings\\neurons_corr\\cont_{context_mapper[context]}.png',
+        dpi=300,
         bbox_inches='tight'
     )
-    plt.show()
+    if visually_verbose:
+        plt.show()
+    return None
+
+
+def visualize_game_specific_panel(
+    embed,
+    context,
+    context_remap,
+    colors_dict,
+    colors_remap,
+    colors_name,
+    save_name,
+    snapshot,
+    cmapper,
+    figsize=(15, 6),
+    scatter_cmapper="coolwarm",
+    scatter_cmap_name="Discretized Value",
+    vmin_sc=0,
+    vmax_sc=100,
+    save_path="results\\figures\\embeddings\\full_panel",
+    visual_verbose=False,
+    **kwargs,
+):
+    """Short summary.
+
+    Args:
+        embed (type): Description of parameter `embed`.
+        context (type): Description of parameter `context`.
+        context_remap (type): Description of parameter `context_remap`.
+        colors_dict (type): Description of parameter `colors_dict`.
+        colors_remap (type): Description of parameter `colors_remap`.
+        colors_name (type): Description of parameter `colors_name`.
+        save_name (type): Description of parameter `save_name`.
+        snapshot (type): Description of parameter `snapshot`.
+        cmapper (type): Description of parameter `cmapper`.
+        figsize (type): Description of parameter `figsize`.
+        scatter_cmapper (type): Description of parameter `scatter_cmapper`.
+        scatter_cmap_name (type): Description of parameter `scatter_cmap_name`.
+        vmin_sc (type): Description of parameter `vmin_sc`.
+        vmax_sc (type): Description of parameter `vmax_sc`.
+        save_path (type): Description of parameter `save_path`.
+        visual_verbose (type): Description of parameter `visual_verbose`.
+        **kwargs (type): Description of parameter `**kwargs`.
+
+    Returns:
+        type: Description of returned object.
+
+    """
+    embed = ss().fit_transform(embed)
+
+    reducer = PCA(n_components=2, whiten=True).fit(embed)
+    variance_exp = reducer.explained_variance_ratio_
+    variance_exp = np.around(variance_exp, 2) * 100
+    variance_exp = variance_exp.astype(int)
+
+    reduction = reducer.transform(embed)
+
+    fig = plt.figure(figsize=figsize, constrained_layout=True)
+    spec = fig.add_gridspec(ncols=10, nrows=2)
+
+    ax_context = fig.add_subplot(spec[:, :4])
+    axs_metrics = [
+        fig.add_subplot(spec[0, 4:6]),
+        fig.add_subplot(spec[0, 6:8]),
+        fig.add_subplot(spec[0, 8:]),
+        fig.add_subplot(spec[1, 5:7]),
+        fig.add_subplot(spec[1, 7:9]),
+    ]
+
+    c = cmapper(int(context))
+    ax_context.scatter(
+        reduction[:, 0],
+        reduction[:, 1],
+        marker="o",
+        edgecolor="",
+        color=c,
+        label="Object {}".format(context_remap[context]),
+        **kwargs,
+    )
+    ax_context.set_ylabel("")
+    ax_context.set_xlabel("")
+    ax_context.set_title(f"Game Context - $t$ {snapshot}")
+
+    index = 0
+    for color_name, ax_metric in zip(colors_name, axs_metrics):
+
+        img = ax_metric.scatter(
+            reduction[:, 0],
+            reduction[:, 1],
+            c=colors_dict[color_name],
+            marker="o",
+            edgecolor="",
+            cmap=scatter_cmapper,
+            vmin=vmin_sc,
+            vmax=vmax_sc,
+            **kwargs,
+        )
+        ax_metric.set_title(f"{colors_remap[color_name]} - $t$ {snapshot}")
+        if index > 2:
+            ax_metric.set_yticks([])
+            ax_metric.set_xlabel("")
+        else:
+            ax_metric.set_yticks([])
+            ax_metric.set_xticks([])
+        index += 1
+
+    fig.text(
+        0.5,
+        -0.01,
+        f"Component 1 - Explained Variance {variance_exp[0]}%",
+        ha="center",
+    )
+    fig.text(
+        -0.01,
+        0.5,
+        f"Component 2 - Explained Variance {variance_exp[1]}%",
+        va="center",
+        rotation="vertical",
+    )
+    handles, labels = ax_context.get_legend_handles_labels()
+    leg = ax_context.legend(handles, labels, markerscale=8, ncol=1)
+    leg.get_frame().set_edgecolor("k")
+
+    plt.tight_layout()
+
+    cbaxes = fig.add_axes([1.0, 0.1, 0.02, 0.8])
+    cbar = fig.colorbar(
+        img,
+        cax=cbaxes,
+        cmap="coolwarm",
+        boundaries=np.linspace(vmin_sc, vmax_sc, 100),
+        ticks=np.linspace(vmin_sc, vmax_sc, 5),
+    )
+    cbar.set_label(scatter_cmap_name)
+
+    plt.savefig(
+        f"{save_path}\\game_specific_{save_name}.png",
+        dpi=100,
+        bbox_inches="tight",
+    )
+    if visual_verbose:
+        plt.show()
+
     return None

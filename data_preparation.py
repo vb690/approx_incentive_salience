@@ -4,12 +4,12 @@ import pandas as pd
 
 from sklearn.preprocessing import MinMaxScaler as mms
 
-from modules.utils.data_utils.data_preprocessers import outliers_removal
 from modules.utils.data_utils.data_handlers import data_handling_pipeline
 
 
 features = [
     'delta_sessions',
+    'session_order',
     'active_time',
     'session_time',
     'activity'
@@ -171,5 +171,5 @@ data_handling_pipeline(
     grouping_key='max_sess_cut',
     sorting_keys=['user_id', 'session_order'],
     train_size=0.90,
-    batch_size=256
+    batch_size=512
 )

@@ -70,5 +70,4 @@ def preprocessing_df(df, features_keys, scaler, id_key='user_id',
         id_key=id_key
     )
     df_tr[features_keys] = scaler.fit_transform(df_tr[features_keys].values)
-    df_ts[features_keys] = scaler.transform(df_ts[features_keys].values)
     return df_tr, df_ts, scaler
